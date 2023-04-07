@@ -1,8 +1,6 @@
 ﻿
 
 //the current length of the snake
-using System.Numerics;
-
 int snakeLength = 5;
 
 //the positions of the snakes elements
