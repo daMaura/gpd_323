@@ -15,7 +15,7 @@ Console.SetCursorPosition(foodPos.left, foodPos.top);
 Console.Write('*');
 
 //set start position
-Dir richtung = Dir.Right;
+DirectionTypes direction = DirectionTypes.Right;
 Console.SetCursorPosition(5, 5);
 
 
@@ -29,32 +29,32 @@ while (true)
 
 
         if (key.Key == ConsoleKey.W)
-            richtung = Dir.Up;
+            direction = DirectionTypes.Up;
 
         if (key.Key == ConsoleKey.A)
-            richtung = Dir.Left;
+            direction = DirectionTypes.Left;
 
         if (key.Key == ConsoleKey.S)
-            richtung = Dir.Down;
+            direction = DirectionTypes.Down;
 
         if (key.Key == ConsoleKey.D)
-            richtung = Dir.Right;
+            direction = DirectionTypes.Right;
     }
 
     //move snake in a direction
-    switch (richtung)
+    switch (direction)
     {
 
-        case Dir.Up:
+        case DirectionTypes.Up:
             Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop - 1);
             break;
-        case Dir.Down:
+        case DirectionTypes.Down:
             Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop + 1);
             break;
-        case Dir.Left:
+        case DirectionTypes.Left:
             Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
             break;
-        case Dir.Right:
+        case DirectionTypes.Right:
             Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
             break;
         default:
@@ -108,7 +108,7 @@ while (true)
 
 
 
-public enum Dir
+public enum DirectionTypes
 {
     Up,
     Down,
