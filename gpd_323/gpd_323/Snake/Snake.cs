@@ -10,36 +10,33 @@ namespace gpd_323.Snake
     internal class Snake
     {
 
-        //the current length of the snake
+        // The current length of the snake
         int snakeLength = 5;
 
-        //the positions of the snakes elements
-        List<(int left, int top)> SnakePos = new List<(int left, int top)>();
+        // The positions of the snake's elements
+        List<(int left, int top)> snakePositions = new List<(int left, int top)>();
 
-        //init random
+        // Initialize random
         Random random = new Random();
 
+        (int left, int top) foodPosition;
 
-        (int left, int top) foodPos;
-
-        //set start position
+        // Set start position
         DirectionTypes direction = DirectionTypes.Right;
-
 
         public void Run()
         {
-           
+
             SpawnFood();
             Console.SetCursorPosition(5, 5);
 
-            //game Loop
+            // Game loop
             while (true)
             {
-                //player input
+                // Player input
                 if (Console.KeyAvailable)
                 {
                     var key = Console.ReadKey(true);
-
 
                     if (key.Key == ConsoleKey.W)
                         direction = DirectionTypes.Up;
@@ -54,7 +51,7 @@ namespace gpd_323.Snake
                         direction = DirectionTypes.Right;
                 }
 
-                //move snake in a direction
+                // Move snake in a direction
                 switch (direction)
                 {
 
@@ -74,8 +71,8 @@ namespace gpd_323.Snake
                         break;
                 }
 
-                //check if the snake is colliding with itself
-                foreach ((int left, int top) item in SnakePos)
+                // Check if the snake is colliding with itself
+                foreach ((int left, int top) item in snakePositions)
                 {
                     (int left, int top) pos = (Console.CursorLeft, Console.CursorTop);
 
@@ -85,49 +82,50 @@ namespace gpd_323.Snake
                     }
                 }
 
-                //check if the snake is on the position of the food
-                if (foodPos == (Console.CursorLeft, Console.CursorTop))
+                // Check if the snake is on the position of the food
+                if (foodPosition == (Console.CursorLeft, Console.CursorTop))
                 {
-                    //grow snake
+                    // Grow snake
                     snakeLength++;
                     SpawnFood();
                     SpawnFood();
 
-                    //SpawnFood('Ö', ConsoleColor.Cyan);
+                    // SpawnFood('Ö', ConsoleColor.Cyan);
                 }
 
-                //write a new character for the snake
+                // Write a new character for the snake
                 Console.Write('#');
                 Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
 
-                //save the position of the new snake element
-                SnakePos.Add((Console.CursorLeft, Console.CursorTop));
+                // Save the position of the new snake element
+                snakePositions.Add((Console.CursorLeft, Console.CursorTop));
 
-                //delete the last character from the snake
-                if (SnakePos.Count > snakeLength)
+                // Delete the last character from the snake
+                if (snakePositions.Count > snakeLength)
                 {
-                    (int left, int top) curserPos = (Console.CursorLeft, Console.CursorTop);
-                    Console.SetCursorPosition(SnakePos[0].left, SnakePos[0].top);
+                    (int left, int top) cursorPos = (Console.CursorLeft, Console.CursorTop);
+                    Console.SetCursorPosition(snakePositions[0].left, snakePositions[0].top);
                     Console.Write(" ");
-                    Console.SetCursorPosition(curserPos.left, curserPos.top);
+                    Console.SetCursorPosition(cursorPos.left, cursorPos.top);
 
-                    SnakePos.RemoveAt(0);
+                    snakePositions.RemoveAt(0);
                 }
 
                 Thread.Sleep(50);
             }
 
         }
+
         /// <summary>
-        /// Schreibe ein symbol!
+        /// Write a symbol!
         /// </summary>
-        /// <param name="food">Das zeichen was geschrieben wird</param>
+        /// <param name="food">The character that will be written</param>
         /// <param name="color"></param>
         void SpawnFood(char food, ConsoleColor color)
         {
             (int left, int top) cursorPos = (Console.CursorLeft, Console.CursorTop);
-            foodPos = (random.Next(0, Console.WindowWidth), random.Next(0, Console.WindowHeight));
-            Console.SetCursorPosition(foodPos.left, foodPos.top);
+            foodPosition = (random.Next(0, Console.WindowWidth), random.Next(0, Console.WindowHeight));
+            Console.SetCursorPosition(foodPosition.left, foodPosition.top);
             Console.ForegroundColor = color;
             Console.Write(food);
             Console.ForegroundColor = ConsoleColor.White;
